@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Synthèse du Jour</title>
+<title>La Synthèse du Jour — Revue de presse approfondie</title>
 <style>
   :root {
     --bg: #0f1420;
     --panel: #1a2233;
     --panel-2: #212b42;
     --text: #e8ecf4;
-    --muted: #8b95ab;
+    --muted: #9aa5bb;
     --accent: #4f8cff;
     --accent-2: #7c5cff;
+    --gold: #e8b64c;
     --border: rgba(255,255,255,0.08);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,13 +25,15 @@
   }
   header {
     position: sticky; top: 0; z-index: 10;
-    background: rgba(15,20,32,0.85);
+    background: rgba(15,20,32,0.88);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
+  .brand { text-align: center; padding: 14px 0 4px; font-size: .8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+  .brand b { color: var(--text); }
   .date-bar {
     display: flex; align-items: center; justify-content: center;
-    gap: 18px; padding: 16px 12px; max-width: 1100px; margin: 0 auto;
+    gap: 18px; padding: 10px 12px 14px; max-width: 1100px; margin: 0 auto;
   }
   .nav-btn {
     background: var(--panel-2); color: var(--text);
@@ -41,10 +44,10 @@
   .nav-btn:hover { background: var(--accent); transform: scale(1.06); }
   .nav-btn:disabled { opacity: .35; cursor: default; transform: none; background: var(--panel-2); }
   .date-label { text-align: center; min-width: 260px; }
-  .date-label .day { font-size: 1.5rem; font-weight: 700; letter-spacing: .5px; }
-  .date-label .sub { color: var(--muted); font-size: .85rem; margin-top: 2px; text-transform: uppercase; letter-spacing: 2px; }
+  .date-label .day { font-size: 1.45rem; font-weight: 700; letter-spacing: .5px; }
+  .date-label .sub { color: var(--muted); font-size: .82rem; margin-top: 2px; text-transform: uppercase; letter-spacing: 2px; }
   .today-badge {
-    display: inline-block; margin-top: 6px; font-size: .7rem; font-weight: 600;
+    display: inline-block; margin-top: 6px; font-size: .68rem; font-weight: 700;
     background: linear-gradient(90deg, var(--accent), var(--accent-2));
     padding: 3px 12px; border-radius: 20px; letter-spacing: 1px;
   }
@@ -54,43 +57,58 @@
   }
   .tab {
     background: transparent; color: var(--muted); border: 1px solid transparent;
-    padding: 8px 18px; border-radius: 24px; cursor: pointer; font-size: .9rem;
+    padding: 8px 16px; border-radius: 24px; cursor: pointer; font-size: .88rem;
     font-weight: 600; transition: all .2s;
   }
   .tab:hover { color: var(--text); }
   .tab.active { background: var(--panel-2); color: var(--text); border-color: var(--border); }
+  .tab.analyse.active { background: linear-gradient(90deg, rgba(232,182,76,.18), rgba(124,92,255,.18)); border-color: rgba(232,182,76,.4); color: var(--gold); }
   main { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
   .section { display: none; animation: fade .35s ease; }
   .section.active { display: block; }
   @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  .section h2 { font-size: 1.35rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .section h2 { font-size: 1.3rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
   .section h2 .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px; }
   .card {
     background: var(--panel); border: 1px solid var(--border);
-    border-radius: 14px; padding: 18px 20px; transition: transform .2s, border-color .2s;
+    border-radius: 14px; padding: 20px 22px; transition: transform .2s, border-color .2s;
   }
   .card:hover { transform: translateY(-3px); border-color: rgba(79,140,255,.45); }
-  .card h3 { font-size: 1.02rem; margin-bottom: 8px; line-height: 1.4; }
-  .card p { color: var(--muted); font-size: .9rem; line-height: 1.55; }
+  .card h3 { font-size: 1.05rem; margin-bottom: 9px; line-height: 1.4; }
+  .card p { color: var(--muted); font-size: .92rem; line-height: 1.65; }
   .card .tag {
-    display: inline-block; font-size: .68rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--accent); margin-bottom: 8px;
+    display: inline-block; font-size: .66rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--accent); margin-bottom: 9px;
   }
+  .card .src { display: block; margin-top: 10px; font-size: .74rem; color: #6b7690; font-style: italic; }
+  .analyse-card {
+    background: linear-gradient(160deg, var(--panel-2), var(--panel));
+    border: 1px solid rgba(232,182,76,.25);
+    border-radius: 16px; padding: 26px 30px; max-width: 860px; margin: 0 auto;
+  }
+  .analyse-card .kicker { color: var(--gold); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+  .analyse-card h3 { font-size: 1.45rem; line-height: 1.35; margin-bottom: 16px; }
+  .analyse-card p { color: #c3cbdd; font-size: .98rem; line-height: 1.75; margin-bottom: 14px; }
+  .analyse-card p.lead { color: var(--text); font-size: 1.05rem; }
+  .analyse-card .srcs { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: .78rem; color: #6b7690; line-height: 1.7; }
   .empty {
     text-align: center; color: var(--muted); padding: 60px 20px;
     background: var(--panel); border: 1px dashed var(--border); border-radius: 14px;
   }
+  footer { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; color: #6b7690; font-size: .76rem; line-height: 1.7; border-top: 1px solid var(--border); }
   .swipe-hint { text-align: center; color: var(--muted); font-size: .78rem; margin-top: 34px; }
   @media (max-width: 560px) {
     .date-label { min-width: 0; }
-    .date-label .day { font-size: 1.15rem; }
+    .date-label .day { font-size: 1.1rem; }
+    .analyse-card { padding: 20px; }
   }
 </style>
 </head>
 <body>
 
 <header>
+  <div class="brand">📰 <b>La Synthèse du Jour</b> · revue de presse approfondie</div>
   <div class="date-bar">
     <button class="nav-btn" id="prevDay" title="Jour précédent">&#8592;</button>
     <div class="date-label">
@@ -106,6 +124,7 @@
     <button class="tab" data-section="financiere">📈 Financière</button>
     <button class="tab" data-section="economique">💶 Économique</button>
     <button class="tab" data-section="tech">💻 Technologique</button>
+    <button class="tab analyse" data-section="analyse">🔍 Analyse du jour</button>
   </nav>
 </header>
 
@@ -115,96 +134,129 @@
   <section class="section" id="sec-financiere"></section>
   <section class="section" id="sec-economique"></section>
   <section class="section" id="sec-tech"></section>
+  <section class="section" id="sec-analyse"></section>
   <p class="swipe-hint">← → pour changer de jour · glissez sur mobile · flèches du clavier</p>
 </main>
+
+<footer id="sourcesFooter"></footer>
 
 <script>
 const JOURS = {
   "2026-10-31": {
     label: "Samedi 31 octobre 2026",
+    analyse: {
+      kicker: "Éditorial · France",
+      title: "Trois semaines après le 17 octobre, la colère sociale change de visage",
+      paras: [
+        "Le 31 octobre marquait l'« acte III » de la mobilisation contre la vie chère, un samedi coïncidant avec Halloween que le ministre de l'Intérieur Laurent Nuñez avait qualifié de « très haut risque ». Résultat : entre 320 000 (autorités) et près de 500 000 manifestants (intersyndicale), 70 000 policiers et gendarmes déployés, 565 interpellations et un gendarme blessé par un engin explosif en fin de journée à Paris.",
+        "Ce qui frappe les observateurs, c'est l'évolution du mouvement parti des lycées mi-septembre : parti de revendications très concrètes (manque de professeurs — 2 600 postes non pourvus aux concours —, classes surchargées, locaux vétustes, rejet de Parcoursup), il s'est mué en contestation plus large du modèle social. Le sociologue Fabien Truong (France Inter) y voit « une question beaucoup plus générale » que l'éducation : la précarité, l'angoisse de l'avenir et la défiance envers les élites. Son collègue Bernard Lahire souligne que cette jeunesse sait ce qui l'attend : « des années de précarité, d'emplois mal payés, d'incertitude », toile de fond de « décennies de néolibéralisme effréné ».",
+        "Autre nouveauté : la convergence inédite entre mobilisations lycéennes, syndicats, anciens Gilets jaunes et militants écologistes — un « effet miroir avec le mouvement des gilets jaunes », selon la sociologue Valentine Becquet (Le Devoir). Le Haut-Commissariat de l'ONU aux droits de l'homme s'est inquiété des violences policières constatées lors des arrestations massives. Le mouvement ne semble pas s'essouffler : une journée intersyndicale est prévue le 5 novembre et les Gilets jaunes appellent à des convergences fin novembre."
+      ],
+      srcs: ["Sources : TF1 Info, RTL, franceinfo, CNews (bilan chiffré du 31/10) · France Inter, « Zoom zoom zen » 05/10 (Fabien Truong) · En attendant Nadeau, entretien Bernard Lahire 10/10 · Le Devoir (V. Becquet) · RTS (V. Tiberj) · Haut-Commissariat ONU aux droits de l'homme"]
+    },
     nationale: [
-      { t: "Acte III de la mobilisation « contre la vie chère »", d: "Près d'un demi-million de personnes ont manifesté dans toute la France selon l'intersyndicale de la jeunesse (320 000 selon le ministère de l'Intérieur). La journée, qui coïncidait avec Halloween, s'est globalement déroulée dans le calme mais s'est terminée par des affrontements à Paris : un gendarme a été blessé par un engin explosif et 565 personnes ont été interpellées. 70 000 policiers et gendarmes avaient été mobilisés." },
-      { t: "Budget 2026 : le débat s'enlise à l'Assemblée", d: "Le projet de budget n'est toujours pas adopté. Philippe Juvin, rapporteur général de la commission des Finances, affirme qu'il est « déjà caduc », tandis que le gouvernement cherche à éviter le recours au 49.3." },
-      { t: "Trêve hivernale : les expulsions en forte hausse", d: "La trêve hivernale entre en vigueur ce 1er novembre, alors que les expulsions locatives ont bondi de 60 % en dix ans, selon les associations." }
+      { t: "Acte III de la mobilisation « contre la vie chère » : 320 000 à 500 000 manifestants", d: "Près d'un demi-million de personnes selon l'intersyndicale de la jeunesse (320 000 selon le ministère de l'Intérieur). Journée globalement calme, mais fin de soirée tendue à Paris : affrontements, un gendarme blessé par un engin explosif, 565 interpellations. Dispositif de 70 000 policiers et gendarmes, avec BRI, GIGN, blindés Centaure et drones.", src: "TF1 Info, RTL, franceinfo, 31/10/2026" },
+      { t: "Budget 2026 : Philippe Juvin juge le texte « déjà caduc »", d: "Le rapporteur général de la commission des Finances à l'Assemblée estime que le projet de budget n'est plus adopté dans les délais et deviendrait caduc, tandis que l'exécutif tente d'éviter le 49.3. Le débat parlementaire reste bloqué.", src: "franceinfo, 01/11/2026" },
+      { t: "Trêve hivernale : les expulsions locatives ont bondi de 60 % en dix ans", d: "La trêve hivernale débute ce 1er novembre. Les associations dénoncent une envolée des expulsions (+60 % en 10 ans), malgré les promesses de protection des ménages vulnérables.", src: "TF1 Info, 01/11/2026" }
     ],
     internationale: [
-      { t: "Gaza : la phase 2 du cessez-le-feu peine à démarrer", d: "Les frappes israéliennes se poursuivent sur la bande de Gaza, où la reconstruction reste bloquée et où près de 2 millions de personnes sont toujours sans abri adapté avant l'hiver, alerte l'OIM." },
-      { t: "Ukraine : vers un cessez-le-feu le long de la ligne de front", d: "Kyiv a accepté un cessez-le-feu le long de la ligne de front actuelle dans le cadre d'un plan qui consacrerait de facto le contrôle russe sur les territoires occupés, avant de nouvelles négociations. Zelensky réclame des garanties de sécurité américaines et européennes." },
-      { t: "Albanie : manifestations antigouvernementales à Tirana", d: "Des manifestants ont affronté la police à Tirana (cocktails Molotov, canons à eau, gaz lacryogènes) alors que les protestations contre le gouvernement s'intensifiaient." }
+      { t: "Gaza : la phase 2 du cessez-le-feu peine à démarrer", d: "Les frappes israéliennes se poursuivent malgré la trêve entrée en vigueur en octobre 2025. Selon l'ONU, près de 2 millions de personnes — quasi toute la population — restent sans abri adapté avant l'hiver, avec des familles dans des tentes menacées par le vent et la pluie. La reconstruction, estimée à 70 milliards de dollars sur dix ans (Banque mondiale/UE/ONU), est paralysée par les restrictions sur les matériaux de construction.", src: "ONU Info, Crisis Group, UNRIC, 2026" },
+      { t: "Ukraine : vers un cessez-le-feu gelant la ligne de front", d: "Kyiv a accepté un gel des positions actuelles dans le cadre d'un plan qui consacrerait de facto le contrôle russe sur les territoires occupés (~20 % du pays). L'Europe plaide pour des effectifs ukrainiens à 800 000 hommes et la négociation du volet territorial après le cessez-le-feu. Zelensky réclame des garanties de sécurité « équivalentes à l'article 5 de l'OTAN ».", src: "IRIS, Institut Montaigne, Le Grand Continent, oct. 2026" },
+      { t: "Albanie : manifestations antigouvernementales à Tirana", d: "Cocktails Molotov, canons à eau, gaz lacryogènes et balles en caoutchouc : les protestations contre le gouvernement albanais s'intensifient dans la capitale.", src: "Euronews, 20/10/2026" }
     ],
     financiere: [
-      { t: "CAC 40 : le pétrole et l'inflation pèsent sur les marchés", d: "La Bourse de Paris évolue sous tension : le Brent dépasse les 104 dollars le baril début octobre sur fond de tensions au Moyen-Orient, et le CAC 40 a perdu 12,3 % depuis son plus haut du 10 août 2026." },
-      { t: "Banques centrales : hausse des taux pour contenir l'inflation", d: "En septembre, la Fed a relevé ses taux à 3,75-4,00 % (première hausse depuis 2023), la BCE a porté son taux de dépôt à 2,5 % et la Banque du Japon à 1,25 %. L'inflation en zone euro est repartie à la hausse (3,8 % en octobre 2026)." },
-      { t: "Wall Street : l'IA sous surveillance", d: "Les actions technologiques américaines reculent face aux craintes de consommation de trésorerie massive dans le secteur de l'IA, tandis que les rendements obligataires remontent." }
+      { t: "CAC 40 sous pression : pétrole, inflation et dette pèsent sur Paris", d: "Le CAC 40 a perdu 12,3 % depuis son record du 10 août 2026. Le Brent a dépassé 104 $ début octobre, tiré par le conflit au Moyen-Orient. L'inflation en zone euro est remontée à 3,8 % en octobre (2,8 % en juin). Les rendements obligataires progressent et les investisseurs s'inquiètent de la dette française.", src: "Café de la Bourse, Trading Economics, Les Echos, oct. 2026" },
+      { t: "Banques centrales : septembre, le mois des hausses de taux", d: "Fed à 3,75-4,00 % (première hausse depuis 2023), BCE taux de dépôt à 2,5 %, Banque du Japon à 1,25 %. Objectif : contenir une inflation ravivée par l'énergie. D'autres hausses ne sont pas exclues.", src: "CIC, Boursorama, sept.-oct. 2026" },
+      { t: "Wall Street : la « bulle IA » inquiète de plus en plus", d: "Le FMI et plusieurs analystes alertent sur un financement circulaire entre géants de la tech (ex. Nvidia investissant dans OpenAI, qui achète ses puces) et un écart de ~600 Md$ entre capex des hyperscalers (700-900 Md$ prévus en 2026) et revenus réels de l'écosystème IA. Les actions tech reculent sur ces craintes.", src: "FMI, analyses Sequoia/Stanford, Presse spécialisée, oct. 2026" }
     ],
     economique: [
-      { t: "Inflation : nouvelle accélération en zone euro", d: "L'inflation est passée de 2,8 % en juin à 3,8 % en octobre 2026, tirée par la flambée des prix de l'énergie liée au conflit au Moyen-Orient." },
-      { t: "Croissance française revue en baisse", d: "L'Insee a abaissé sa prévision de croissance du PIB pour la France de 0,7 % à 0,4 % pour 2026, évoquant un ralentissement plus marqué que prévu." },
-      { t: "Énergie : le gouvernement promet une baisse à la pompe", d: "Le déblocage de 10 millions de barils de gazole issus des stocks stratégiques doit se traduire par une baisse de 12 à 18 centimes du litre ; les distributeurs sont reçus à Bercy pour un « premier point national »." }
+      { t: "Inflation zone euro : de 2,8 % en juin à 3,8 % en octobre 2026", d: "Le choc énergétique lié à la guerre au Moyen-Orient (détroit d'Ormuz : 20 % du pétrole et 25 % du GNL mondiaux y transitent) est le principal moteur. La BRI estime que le choc iranien ajoutera 1,5 à 2 points d'inflation cumulés en 2026-2027. Le FMI a abaissé sa prévision de croissance mondiale 2026 à 3,1 %.", src: "BRI (working paper 1384), FMI, Euronews, 2026" },
+      { t: "Croissance française revue à la baisse : 0,4 % pour 2026", d: "L'Insee a abaissé sa prévision de 0,7 % à 0,4 %, évoquant un ralentissement plus marqué que prévu, dans un contexte de contraction inattendue et de remontée de l'inflation.", src: "Insee via ABC Bourse, 09/2026" },
+      { t: "Carburants : Bercy promet 12 à 18 centimes de baisse à la pompe", d: "Le déblocage de 10 millions de barils de gazole des stocks stratégiques doit se traduire mécaniquement à la pompe. Réunion mardi des distributeurs à Bercy pour un « premier point national ».", src: "BFM TV, oct.-nov. 2026" }
     ],
     tech: [
-      { t: "Google rasé des forêts nordiques sans autorisation", d: "La Finlande ouvre une enquête pénale après que Google a défriché des forêts sans permis pour alimenter en énergie ses centres de données dédiés à l'IA." },
-      { t: "OpenAI dévoile GPT-6.1 Terra", d: "OpenAI introduit un modèle intermédiaire de sa gamme, renforçant la concurrence dans la course aux modèles de nouvelle génération." },
-      { t: "Apple prépare un MacBook Pro avec écran tactile OLED", d: "Attendu le 6 novembre 2026, le nouveau MacBook Pro embarquerait une dalle OLED tandem tactile avec puces M5 Pro et M5 Max — une première sur Mac." }
+      { t: "Google accusé d'avoir défriché des forêts finlandaises sans permis", d: "La Finlande ouvre une enquête pénale : Google aurait rasé des forêts nordiques sans autorisation pour alimenter en électricité ses data centers dédiés à l'IA — symbole des tensions entre expansion de l'IA et environnement.", src: "Generation NT, 31/10/2026" },
+      { t: "OpenAI lance GPT-6.1 Terra, modèle « intermédiaire »", d: "Nouveau modèle de la gamme, entre les versions principales, dans une course à la puissance qui alimente le débat sur la bulle spéculative de l'IA.", src: "Generation NT, 2026" },
+      { t: "Apple prépare un MacBook Pro tactile OLED (sortie prévue 6 novembre)", d: "Dalle OLED tandem tactile, Dynamic Island, puces M5 Pro/M5 Max en 14 et 16 pouces : une première sur Mac, signe que l'écran tactile s'impose enfin sur les portables haut de gamme.", src: "BlogNT, 28/10/2026" }
     ]
   },
   "2026-11-01": {
     label: "Dimanche 1er novembre 2026",
+    analyse: {
+      kicker: "Éditorial · Semaine décisive",
+      title: "Mardi 3 novembre : le jour où le monde entier regarde les urnes américaines",
+      paras: [
+        "112 millions d'Américains votent mardi pour renouveler les 435 sièges de la Chambre et 35 des 100 sièges du Sénat. Chatham House qualifie ce scrutin de « rare élection de politique étrangère » : pour l'Ukraine d'abord, où ~127 milliards de dollars d'aide américaine sont en jeu — un Congrès démocrate pourrait restaurer l'aide militaire bloquée, avec des majorités des deux tiers capables de passer outre un veto présidentiel. Pour le Moyen-Orient ensuite, alors que Washington a suspendu ses frappes contre l'Iran dans l'attente du vote.",
+        "Pourquoi ce scrutin pèse autant sur Trump ? Parce que son électorat de base se fissure : les agriculteurs républicains de l'Ohio et du Midwest subissent de plein fouet la guerre commerciale avec la Chine (producteurs de soja), et le prix de l'essence grimpe avec le conflit iranien. Avec 32 % d'opinions favorables (Reuters/Ipsos), le président aborde les midterms fragilisé — la règle historique veut que le parti présidentiel perde des sièges à mi-mandat.",
+        "Pour l'Europe, l'enjeu est double : un Congrès démocrate pourrait bloquer la taxe sur le cognac et peser sur l'aide à l'Ukraine, mais aussi « braquer les projecteurs » sur le Moyen-Orient via le pouvoir d'enquête parlementaire — une condamnation au Sénat exigeant toutefois les deux tiers des voix, donc improbable. Le Grand Continent résume le risque : après les midterms, la politique internationale de Trump pourrait devenir « encore plus déjantée », l'OTAN restant le seul filet de sécurité réel (80 000 soldats américains toujours en Europe)."
+      ],
+      srcs: ["Sources : The Independent / Chatham House · Institut Montaigne (M. Duclos) · Le Grand Continent (interview C. Kupchan, oct. 2026) · France Inter (Maya Kandel) · franceinfo (reportage Ohio) · ICP, HuffPost, Touteleurope, oct.-nov. 2026"]
+    },
     nationale: [
-      { t: "Ce qui change au 1er novembre", d: "Trêve hivernale, prix du gaz en hausse de 6,6 %, obligation de pneus neige dans certaines zones, revalorisation des retraites complémentaires : le point sur les changements entrés en vigueur ce dimanche." },
-      { t: "Route du Rhum : 115 bateaux ont pris le large", d: "Le top départ de la Route du Rhum a été donné ce dimanche avec une météo idéale pour les 115 solitaires engagés dans la traversée de l'Atlantique." },
-      { t: "Marathon de New York : victoire historique d'Andreas Almgren", d: "Le champion d'Europe suédois du 10 000 m a remporté l'épreuve en 2h06'01\" pour ses débuts sur la distance du marathon." },
-      { t: "Budget : le rapporteur Philippe Juvin juge le texte « déjà caduc »", d: "Alors que le projet de budget n'est pas encore adopté, le rapporteur général de la commission des Finances à l'Assemblée estime qu'il est déjà caduc." }
+      { t: "Ce qui change au 1er novembre", d: "Entrée en vigueur de la trêve hivernale, hausse de 6,6 % du prix repère du gaz naturel, obligation de pneus neige dans certaines zones de montagne, revalorisation des retraites complémentaires. Tour d'horizon des changements du jour de la Toussaint.", src: "franceinfo, 01/11/2026" },
+      { t: "Route du Rhum : 115 solitaires partis avec une météo idéale", d: "Top départ donné ce dimanche pour la transatlantique en solitaire, avec des conditions particulièrement favorables pour les 115 skippers engagés.", src: "TF1 Info, 01/11/2026" },
+      { t: "Marathon de New York : Andreas Almgren signe 2h06'01\"", d: "Le champion d'Europe suédois du 10 000 m remporte la victoire pour ses débuts sur la distance reine, devant un plateau relevé.", src: "franceinfo, 01/11/2026" },
+      { t: "Budget : le rapporteur Juvin maintient que le texte est « déjà caduc »", d: "Le bras de fer continue entre l'exécutif et le Parlement sur le projet de loi de finances 2026, toujours non adopté à la Toussaint.", src: "franceinfo, 01/11/2026" }
     ],
     internationale: [
-      { t: "Gaza : huit morts dans des frappes israéliennes", d: "Plusieurs frappes israéliennes sur la bande de Gaza ce dimanche ont tué huit personnes, dont un enfant, selon les autorités sanitaires locales." },
-      { t: "Élections de mi-mandat américaines : le scrutin s'ouvre mardi", d: "112 millions d'Américains sont appelés aux urnes mardi 3 novembre pour renouveler les 435 sièges de la Chambre et 35 sièges du Sénat. Les sondages donnent la Chambre aux démocrates, le Sénat restant incertain." },
-      { t: "Ukraine : Zelensky réclame d'être partie prenante de toute négociation", d: "Le président ukrainien insiste pour que Kyiv participe à toute négociation et réclame des garanties de sécurité de Washington et des Européens, tandis que les restrictions sur les services satellitaires de SpaceX alimentent les tensions." },
-      { t: "États-Unis : des chatbots d'IA diffusent de fausses infos sur les élections", d: "À l'approche des midterms, des outils d'intelligence artificielle participeraient à la diffusion de fausses informations électorales, selon des observateurs." }
+      { t: "Gaza : huit morts dans des frappes israéliennes ce dimanche", d: "Huit Palestiniens tués, dont un enfant, selon les autorités sanitaires de Gaza — rappel que le cessez-le-feu d'octobre 2025 reste régulièrement violé, avec plus de 1 470 morts recensés depuis la trêve.", src: "BFM TV, Democrata.es, ONU, 01/11/2026" },
+      { t: "Midterms : 112 millions d'électeurs appelés aux urnes mardi 3 novembre", d: "Chambre et un tiers du Sénat en jeu, plus de 52 millions de votes anticipés déjà déposés. Les sondages donnent la Chambre aux démocrates ; le Sénat reste incertain. Premiers résultats dans la nuit de mardi à mercredi (heure de Paris).", src: "Europe 1, HuffPost, Touteleurope, 2026" },
+      { t: "Ukraine : Zelensky veut être « partie prenante de toute négociation »", d: "Le président ukrainien réclame des garanties de sécurité américaines et européennes solides, alors que les restrictions sur les services satellitaires de SpaceX (Starlink) alimentent les tensions avec Washington.", src: "Euronews, 2026" },
+      { t: "Des chatbots d'IA accusés de diffuser de fausses infos électorales américaines", d: "À l'approche des midterms, des outils d'IA participeraient à la désinformation électorale — un nouveau front de la guerre de l'information.", src: "Actu Orange, 2026" }
     ],
     financiere: [
-      { t: "CAC 40 à un sommet d'un mois après la décision de la BCE", d: "Le CAC 40 a clôturé jeudi 30 octobre en hausse de 1 % à 7 970 points, son plus haut niveau en un mois, après que la BCE a maintenu son taux de dépôt à 2,5 %." },
-      { t: "Pétrole : le baril autour de 115 dollars", d: "Le pétrole évolue autour de 115 dollars le baril après avoir atteint 117 dollars vendredi, dans un contexte de tensions persistantes entre les États-Unis et l'Iran et de risque d'escalade au Moyen-Orient." },
-      { t: "Semaine boursière décisive : midterms et emploi américain", d: "Les marchés anticipent une semaine volatile : élections de mi-mandat mardi 3 novembre, publication vendredi 6 novembre des chiffres de l'emploi non agricole d'octobre (créations attendues : +65 000 après +29 000 en septembre)." }
+      { t: "CAC 40 à 7 970 points, plus haut d'un mois, après le statu quo de la BCE", d: "La Bourse de Paris a clôturé jeudi 30 octobre en hausse de 1 %, dopée par la décision de la BCE de maintenir son taux de dépôt à 2,5 % — un répit avant une semaine agitée.", src: "Trading Economics, 30/10/2026" },
+      { t: "Pétrole : le baril à ~115 $, pic à 117 $ vendredi", d: "Le Brent a gagné plus de 60 % depuis le début de la guerre américano-israélo-iranienne en février 2026 et reste au-dessus de 100 $ depuis le 7 octobre. La fermeture du détroit d'Ormuz a fait chuter la production mondiale de plus de 10 millions de barils/jour au pire de la crise.", src: "Reuters via IndexBox, Euronews, Banque mondiale, 2026" },
+      { t: "Semaine boursière à haut risque : midterms + emploi américain vendredi", d: "Outre le scrutin du 3/11, les marchés attendent vendredi 6/11 les chiffres de l'emploi non agricole d'octobre (+65 000 créations attendues après +29 000 en septembre) et les décisions de la Banque d'Angleterre et de la RBA.", src: "KuCoin/Newsquawk, calendrier macro 02-08/11/2026" }
     ],
     economique: [
-      { t: "BCE : statu quo sur les taux malgré l'inflation", d: "La Banque centrale européenne a maintenu son taux de dépôt à 2,5 %, tout en évaluant les risques inflationnistes liés aux perturbations du marché de l'énergie. La Fed maintient également ses taux inchangés pour l'instant." },
-      { t: "Gaz naturel : le prix repère en hausse de 6,6 %", d: "Le prix repère de vente du gaz naturel a augmenté de 6,6 % ce dimanche, poussant des ménages à limiter leur chauffage. Une céréale africaine commence par ailleurs à montrer son potentiel en France face au réchauffement climatique." },
-      { t: "Santé mentale : Grande cause nationale 2026", d: "Le gouvernement a fait de la santé mentale la Grande cause nationale de l'année 2026, avec une campagne de sensibilisation lancée à l'occasion de la Toussaint." }
+      { t: "BCE et Fed : statu quo sur les taux malgré l'inflation", d: "La BCE maintient son taux de dépôt à 2,5 % tout en surveillant les risques liés à l'énergie ; la Fed garde ses taux inchangés pour l'instant. Les deux banques centrales marchent sur une ligne de crête : hausse des taux = risque de récession, statu quo = risque d'inflation ancrée.", src: "BCE, Trading Economics, sept.-nov. 2026" },
+      { t: "Gaz naturel : le prix repère grimpe de 6,6 % ce dimanche", d: "Nouvelle hausse qui pousse des ménages à rationner le chauffage. À noter : face au réchauffement, une céréale d'origine africaine commence à montrer son potentiel agronomique en France.", src: "franceinfo, 01/11/2026" },
+      { t: "Santé mentale : Grande cause nationale 2026", d: "Le gouvernement lance une campagne nationale à l'occasion de la Toussaint, sur le thème « Tempête mentale », pour sensibiliser aux troubles psychiques et lutter contre la stigmatisation.", src: "info.gouv.fr, 2026" }
     ],
     tech: [
-      { t: "Mistral AI publie les poids de Mistral Large 4 en open-weight", d: "Le champion français de l'IA franchit une étape en rendant publics les poids de son modèle Mistral Large 4, renforçant la dynamique de l'open source européen." },
-      { t: "Premier MacBook tactile en approche", d: "Apple préparerait un MacBook Pro doté d'un écran tactile OLED, attendu pour le 6 novembre 2026 — une première pour la gamme MacBook." },
-      { t: "Google fait tourner son IA en orbite (Project Suncatcher)", d: "Depuis le 1er octobre, des puces IA de Google fonctionnent directement en orbite à bord d'un satellite lancé par une Falcon 9 de SpaceX, ouvrant la voie à des centres de calcul spatiaux." },
-      { t: "Black Friday : les premières offres tech démarrent", d: "Les premières vraies promotions du Black Friday sont déjà en ligne ce dimanche 1er novembre, avec notamment des offres sur les produits high-tech." }
+      { t: "Mistral AI publie Mistral Large 4 en open-weight", d: "Le champion français rend publics les poids de son modèle — un geste fort pour l'open source européen, à contre-courant de la fermeture des laboratoires américains, et qui renforce la souveraineté technologique de l'UE.", src: "BlogNT, Futura, 01/11/2026" },
+      { t: "MacBook tactile OLED attendu le 6 novembre", d: "Apple s'apprêterait à lancer un MacBook Pro à écran tactile — rupture ergonomique inédite sur la gamme, après des années de résistance de l'entreprise à l'idée.", src: "Frandroid, BlogNT, World Is Small, 01/11/2026" },
+      { t: "Google fait tourner son IA en orbite (Project Suncatcher)", d: "Depuis le 1er octobre, des TPU de Google exécutent des calculs directement à bord d'un satellite lancé par une Falcon 9 de SpaceX — première étape vers des data centers spatiaux, portés par l'explosion des besoins énergétiques terrestres de l'IA (800 TWh attendus en 2026 pour les data centers).", src: "Techno-Science, MacGeneration, AIE, oct.-nov. 2026" },
+      { t: "Black Friday : les premières vraies offres tech sont déjà là", d: "Dès ce dimanche 1er novembre, les premières promotions significatives du Black Friday sont en ligne sur les produits high-tech.", src: "Frandroid, 01/11/2026" }
     ]
   },
   "2026-11-02": {
     label: "Lundi 2 novembre 2026",
+    analyse: {
+      kicker: "Éditorial · Géopolitique",
+      title: "Guerre en Iran, cessez-le-feu à Gaza, paix forcée en Ukraine : le monde tient son souffle avant le 3 novembre",
+      paras: [
+        "Trois crises structurent cette fin d'année 2026, et toutes trois pourraient basculer dans les prochains jours. Au Moyen-Orient, la guerre entre les États-Unis/Israël et l'Iran, déclenchée en février 2026, a provoqué la plus forte perturbation de l'offre pétrolière de l'histoire (production mondiale amputée de plus de 10 millions de barils/jour) et la Banque mondiale table sur la plus forte hausse des prix de l'énergie depuis 2022. Washington aurait suspendu ses frappes en attendant les midterms — et des sources évoquent une reprise possible dès le 4 novembre.",
+        "À Gaza, un an après le cessez-le-feu d'octobre 2025, la « phase 2 » du plan Trump reste lettre morte : le Conseil de paix créé par Washington peine à débloquer l'aide humanitaire (l'objectif de 4 200 camions/semaine n'est pas atteint, dénonce même la France à l'ONU), Israël contrôle désormais 60 % de l'enclave et le Hamas refuse le désarmement vérifié. Foreign Affairs parle d'un cessez-le-feu vidé de sa substance : « juste assez de violences pour empêcher toute reconstruction, pas assez pour provoquer un tollé international ».",
+        "En Ukraine enfin, le plan américain (19 à 28 points selon les versions) prévoit un gel de la ligne de front consacrant de facto l'occupation russe de ~20 % du territoire, en échange de garanties de sécurité « équivalentes à l'article 5 ». L'Ifri et l'IRIS avertissent du « piège du cessez-le-feu trumpiste » : sans mécanisme de surveillance crédible, un gel ne ferait que reporter la guerre — comme l'a montré le cessez-le-feu de Pâques 2026, violé 2 299 fois en 48 heures. L'Europe, court-circuitée par Washington, tente de peser via la « coalition des volontaires » — mais sans savoir quel mandat aurait une force européenne sur le sol ukrainien."
+      ],
+      srcs: ["Sources : Euronews/Banque mondiale (28/04/2026) · Foreign Affairs, « The End of Gaza » (07/10/2026) · Crisis Group, « Hollow Promises » (août 2026) · IRIS, Ifri, Institut Montaigne, Le Grand Continent (oct. 2026) · ONU Info / presse ONU · Institut des sciences stratégiques"]
+    },
     nationale: [
-      { t: "À la veille des midterms, la France observe Washington", d: "Le scrutin américain de mardi sera suivi de près à Paris : un Congrès démocrate pourrait bloquer la taxe sur le cognac, l'aide militaire à l'Ukraine et d'autres mesures du second mandat de Donald Trump." },
-      { t: "Mobilisations : les autorités préparent la suite après le 31 octobre", d: "Après l'acte III du samedi 31 octobre, la coordination des Gilets jaunes appelle à des assemblées de convergence fin novembre pour fédérer les luttes." },
-      { t: "Distributeurs reçus à Bercy sur le prix des carburants", d: "Réunion mardi au ministère de l'Économie pour un « premier point national » sur la baisse promise de 12 à 18 centimes du litre après le déblocage des stocks stratégiques." }
+      { t: "Veille des midterms : la France suit Washington de très près", d: "Un Congrès démocrate pourrait bloquer la taxe sur le cognac, peser sur l'aide militaire à l'Ukraine et utiliser son pouvoir d'enquête sur l'administration Trump. Paris et Bruxelles anticipent tous les scénarios.", src: "Actu Alt Plus, Touteleurope, 02/11/2026" },
+      { t: "Après le 31 octobre, les Gilets jaunes préparent des convergences fin novembre", d: "La coordination appelle à des assemblées locales pour fédérer les luttes, tandis que l'intersyndicale maintient sa journée du 5 novembre.", src: "CNews, TF1 Info, oct.-nov. 2026" },
+      { t: "Carburants : les distributeurs reçus mardi à Bercy", d: "« Premier point national » pour faire le bilan de la baisse de 12 à 18 centimes/litre promise après le déblocage des stocks stratégiques de gazole.", src: "BFM TV, 02/11/2026" }
     ],
     internationale: [
-      { t: "Midterms 2026 : 112 millions d'électeurs attendus mardi", d: "Les 435 sièges de la Chambre des représentants et 35 des 100 sièges du Sénat sont en jeu. Plus de 52 millions de bulletins ont déjà été déposés par vote anticipé. Premiers résultats attendus dans la nuit de mardi à mercredi (heure de Paris)." },
-      { t: "Gaza : l'ONU avertit contre un retour de la famine", d: "L'état de famine officiellement levé en décembre 2025, mais la population reste confrontée à une insécurité alimentaire aiguë ; sans aide massive, Gaza pourrait retomber dans la famine d'ici 2026, prévient l'ONU." },
-      { t: "Congrès mondial sur Internet à Wuzhen (Chine)", d: "Du 2 au 5 novembre, la conférence de Wuzhen réunit à Zhejiang des acteurs du numérique autour du thème « Open Source et ouverture », avec un dialogue consacré à l'IA et à la robotique." }
+      { t: "Midterms : 470 sièges fédéraux en jeu mardi", d: "435 sièges de la Chambre + 35 du Sénat + 36 postes de gouverneur. 52 millions de bulletins déjà déposés en vote anticipé. Résultats dès la nuit de mardi à mercredi en France.", src: "Europe 1, franceinfo, Touteleurope, 2026" },
+      { t: "Gaza : l'ONU alerte sur un possible retour de la famine d'ici 2026", d: "L'état de famine levé en décembre 2025, mais l'insécurité alimentaire aiguë persiste : sans aide massive et soutenue, l'enclave replongerait, prévient l'OIM/ONU.", src: "UNRIC/ONU, 2026" },
+      { t: "Congrès mondial sur Internet à Wuzhen (Chine), du 2 au 5 novembre", d: "Sous le thème « Open Source et ouverture », avec un dialogue consacré à l'IA et à la robotique — la Chine affiche sa vision d'un cyberespace ouvert mais souverain.", src: "KuCoin/calendrier événementiel, 2026" }
     ],
     financiere: [
-      { t: "Semaine macro chargée : midterms, emploi US, banques centrales", d: "Du 2 au 8 novembre : élections américaines (3/11), emploi non agricole d'octobre (6/11), décisions de la Banque d'Angleterre et de la RBA, réserves de change chinoises (7/11). Les actifs à risque pourraient subir des pressions." },
-      { t: "Or et pétrole en hausse avant le scrutin américain", d: "Les marchés des métaux précieux et du pétrole brut ouvrent dès lundi matin à Pékin, et les marchés américains dans la nuit, dans l'attente des premiers résultats des midterms." },
-      { t: "Rumeurs : reprise possible des frappes US contre l'Iran après le 3 novembre", d: "Selon des sources américaines, Donald Trump envisagerait de reprendre les frappes contre l'Iran après les élections de mi-mandat, potentiellement dès le 4 novembre — un facteur de risque géopolitique pour les marchés." }
+      { t: "Semaine macro explosive : midterms, emploi US, BoE, RBA", d: "Du 2 au 8 novembre : élections américaines (3/11), emploi non agricole d'octobre (6/11, +65 000 attendus), décisions de taux de la Banque d'Angleterre et de la RBA australienne, réserves de change chinoises (7/11).", src: "KuCoin, Newsquawk, 2026" },
+      { t: "Or et pétrole montent avant le scrutin américain", d: "Les marchés asiatiques ouvrent dès lundi matin à Pékin ; Wall Street dans la nuit. Les actifs à risque restent sous pression dans l'incertitude électorale.", src: "KuCoin, 02/11/2026" },
+      { t: "Rumeur : reprise des frappes US contre l'Iran possible dès le 4 novembre", d: "Selon des sources américaines, Trump envisagerait de relancer les frappes après les midterms — un choc géopolitique majeur pour les marchés énergétiques.", src: "KuCoin/flash info, 02/11/2026" }
     ],
     economique: [
-      { t: "Salon de l'importation de Chine à Shanghai", d: "Du 5 au 10 novembre, la 9e édition du China International Import Expo se tient à Shanghai, accompagnée du Forum économique international de Hongqiao." },
-      { t: "Croissance zone euro : 0,9 % attendus en 2026", d: "Selon les projections de la BCE, la croissance du PIB de la zone euro atteindrait 0,9 % cette année, avec une inflation globale estimée à 2,8 % — des chiffres à confirmer lors de la prochaine réunion." },
-      { t: "Dette publique et consommation au cœur des débats", d: "En France comme ailleurs, la combinaison d'une dette élevée, d'une inflation qui repart et de taux durablement hauts continue de peser sur le pouvoir d'achat et la confiance des ménages." }
+      { t: "Salon de l'importation de Chine à Shanghai (5-10 novembre)", d: "9e édition du CIIE, accompagnée du Forum économique de Hongqiao : la Chine entend réaffirmer son ouverture commerciale malgré la guerre des droits de douane.", src: "KuCoin, 2026" },
+      { t: "Zone euro : croissance à 0,9 % et inflation à 2,8 % attendues en 2026", d: "Projections BCE à surveiller de près : la guerre au Moyen-Orient fait peser un risque haussier sur l'inflation et baissier sur la croissance.", src: "BCE, XTB, 2026" },
+      { t: "Dette, inflation, pouvoir d'achat : le triple frein de la consommation", d: "En France, la combinaison de taux durablement élevés et d'une inflation qui repart fragilise la confiance des ménages et pèse sur la croissance (prévision Insee ramenée à 0,4 %).", src: "Insee, Café de la Bourse, 2026" }
     ],
     tech: [
-      { t: "iPad mini OLED avec puce A20 en approche", d: "Le nouvel iPad mini d'Apple, équipé de la puce A20 et d'un écran OLED, a fait sa première apparition sur Geekbench quelques jours avant sa commercialisation prévue le 6 novembre 2026." },
-      { t: "IA au cerveau : une IA a choisi un traitement injecté dans le cerveau d'une souris", d: "Des chercheurs ont utilisé une intelligence artificielle pour sélectionner et administrer un traitement directement dans le cerveau d'une souris — une première qui interroge les frontières de la médecine augmentée par l'IA." },
-      { t: "GPT-6 franchit un seuil « critique » inquiétant ses créateurs", d: "Le nouveau modèle d'OpenAI atteint un niveau de performance qualifié de « critique » par ses propres concepteurs, relançant le débat sur la régulation de l'IA de pointe." }
+      { t: "iPad mini OLED (puce A20) repéré sur Geekbench avant le 6 novembre", d: "La nouvelle tablette d'Apple, plus fine et dotée d'un écran OLED, devrait être dévoilée cette semaine aux côtés du MacBook tactile.", src: "World Is Small, 01/11/2026" },
+      { t: "Une IA a choisi et injecté un traitement dans le cerveau d'une souris", d: "Première du genre : un modèle d'IA a sélectionné et administré un traitement directement dans le cerveau d'un animal — une avancée médicale qui interroge les cadres éthiques et juridiques.", src: "Numerama, 01/11/2026" },
+      { t: "GPT-6 franchit un seuil « critique » qui inquiète ses propres créateurs", d: "Le niveau atteint par le nouveau modèle relance le débat sur la régulation de l'IA de pointe et sur les risques d'une course en avant non maîtrisée.", src: "Futura Sciences, 2026" }
     ]
   }
 };
@@ -215,13 +267,14 @@ const JOURS_SEM = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","sam
 const dates = Object.keys(JOURS).sort();
 let index = dates.length - 1;
 
-const SECTIONS = ["nationale","internationale","financiere","economique","tech"];
+const SECTIONS = ["nationale","internationale","financiere","economique","tech","analyse"];
 const TITRES = {
   nationale: "🇫🇷 Nationale",
   internationale: "🌍 Internationale",
   financiere: "📈 Financière",
   economique: "💶 Économique",
-  tech: "💻 Technologique"
+  tech: "💻 Technologique",
+  analyse: "🔍 Analyse du jour"
 };
 
 function parseDate(iso) {
@@ -244,16 +297,29 @@ function render() {
 
   SECTIONS.forEach(s => {
     const el = document.getElementById("sec-" + s);
-    const items = JOURS[iso][s] || [];
+    const day = JOURS[iso];
+    if (s === "analyse") {
+      const a = day.analyse;
+      if (!a) { el.innerHTML = '<div class="empty">Pas d\'éditorial pour ce jour.</div>'; return; }
+      el.innerHTML = "<div class='analyse-card'><div class='kicker'>" + a.kicker + "</div><h3>" + a.title + "</h3>" +
+        a.paras.map((p,i) => "<p class='" + (i===0 ? "lead" : "") + "'>" + p + "</p>").join("") +
+        "<div class='srcs'>" + a.srcs.join("<br>") + "</div></div>";
+      return;
+    }
+    const items = day[s] || [];
     if (!items.length) {
       el.innerHTML = '<div class="empty">Aucune synthèse disponible pour ce jour dans cette rubrique.</div>';
       return;
     }
     el.innerHTML = "<h2><span class='dot'></span>" + TITRES[s] + "</h2><div class='cards'>" +
       items.map(it =>
-        "<article class='card'><span class='tag'>À retenir</span><h3>" + it.t + "</h3><p>" + it.d + "</p></article>"
+        "<article class='card'><span class='tag'>À retenir</span><h3>" + it.t + "</h3><p>" + it.d + "</p>" +
+        (it.src ? "<span class='src'>Source : " + it.src + "</span>" : "") + "</article>"
       ).join("") + "</div>";
   });
+
+  document.getElementById("sourcesFooter").innerHTML =
+    "<b>Sources utilisées pour cette édition :</b> franceinfo, BFMTV, TF1 Info, RTL, CNews, 20 Minutes, Le Devoir, RTS · Euronews, France 24, ONU Info/UNRIC, Le Grand Continent, Institut Montaigne, IRIS, Ifri, Crisis Group, Chatham House, Foreign Affairs, The Independent · Boursorama, Les Echos, Trading Economics, KuCoin, BRI, FMI, BCE · Frandroid, Numerama, Génération NT, BlogNT, Futura, Techno-Science, World Is Small.<br>Revue de presse réalisée à partir de sources publiques francophones et internationales, citées article par article. Contenu éditorialisé à titre informatif.";
 }
 
 document.getElementById("prevDay").addEventListener("click", () => { if (index > 0) { index--; render(); } });
